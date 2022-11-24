@@ -8,6 +8,7 @@ import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 
@@ -16,16 +17,16 @@ const [customers, setCustomers] = useState([]);
 
 const [columnDefs] = useState([
     //{field: 'id', sortable: true, filter: true},
-    {field: 'firstname', sortable: true, filter: true},
-    {field: 'lastname', sortable: true, filter: true},
-    {field: 'streetaddress', sortable: true, filter: true},
-    {field: 'postcode', sortable: true, filter: true},
-    {field: 'city', sortable: true, filter: true},
-    {field: 'email', sortable: true, filter: true},
-    {field: 'phone', sortable: true, filter: true},
+    {field: 'firstname', headerName: 'First name', sortable: true, filter: true},
+    {field: 'lastname', headerName: 'Last name', sortable: true, filter: true},
+    {field: 'streetaddress', headerName: 'Street address', sortable: true, filter: true},
+    {field: 'postcode', headerName: 'Post code', sortable: true, filter: true},
+    {field: 'city', headerName: 'City', sortable: true, filter: true},
+    {field: 'email', headerName: 'Email', sortable: true, filter: true},
+    {field: 'phone', headerName: 'Phone', sortable: true, filter: true},
     {
-        width: 120,
-        cellRenderer: params => <EditCustomer data={params.data} editCar={updateCustomer}/>
+            width: 120,
+            cellRenderer: params => <EditCustomer data={params.data} updateCustomer={updateCustomer}/>
     },
     {
             width: 120,
@@ -81,7 +82,7 @@ const updateCustomer = (customer, url) => {
         if (response.ok)
             getCustomers();
         else
-            alert('Something went wrong in the addition!')
+            alert('Something went wrong in editing!')
     })
     .catch(err => console.error(err))
 }

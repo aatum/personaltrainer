@@ -16,10 +16,11 @@ export default function Training(){
         valueFormatter: function (params){
         return moment (params.value).format ('DD-MM-YYYY, HH:MM');
         }},
-        {field: 'duration', sortable: true, filter: true},
-        {field: 'activity', sortable: true, filter: true},
-        {field: 'customer.firstname', sortable: true, filter: true},
-        {field: 'customer.lastname', sortable: true, filter: true},
+        {field: 'duration', headerName: 'Duration (min)', sortable: true, filter: true},
+        {field: 'activity', headerName: 'Activity', sortable: true, filter: true},
+        {field: 'customer.firstname', headerName: 'Customer (first name)', sortable: true, filter: true},
+        {field: 'customer.lastname', headerName: 'Customer (last name)', sortable: true, filter: true},
+
     ])
 
     useEffect(() => {
@@ -28,9 +29,11 @@ export default function Training(){
  
     const getTrainings = () => {
         fetch(API_URL_TRAININGS)
-        .then(response => response.json())
-        .then(data => setTrainings(data.content));
-    };
+            .then(response => response.json())
+            .then(data => {setTrainings(data);
+            })
+            .catch(err => console.log(err));
+    }
 
     return(
         <>
