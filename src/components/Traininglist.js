@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import { API_URL_TRAININGS_GET } from '../constants';
 import { API_URL_TRAININGS } from '../constants';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import moment from 'moment';
+import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Customer from './Customerlist';
 
@@ -20,7 +22,10 @@ export default function Training(){
         {field: 'activity', headerName: 'Activity', sortable: true, filter: true},
         {field: 'customer.firstname', headerName: 'Customer (first name)', sortable: true, filter: true},
         {field: 'customer.lastname', headerName: 'Customer (last name)', sortable: true, filter: true},
-
+        {
+            width: 120,
+            cellRenderer: params => <Button color = 'error' startIcon={<DeleteIcon />} onClick={() => deleteTraining(params.data.id)}>Delete</Button>
+        }   
     ])
 
     useEffect(() => {
@@ -28,11 +33,23 @@ export default function Training(){
     }, [])
  
     const getTrainings = () => {
-        fetch(API_URL_TRAININGS)
+        fetch(API_URL_TRAININGS_GET)
             .then(response => response.json())
             .then(data => {setTrainings(data);
             })
             .catch(err => console.log(err));
+    }
+
+    const deleteTraining = (id) => {
+        window.confirm('Are you sure?')
+        fetch(API_URL_TRAININGS + id, {method: 'DELETE'})
+        .then(response => {
+            if (response.ok)
+                getTrainings();
+            else
+                alert('Something went wrong in deletion');
+        })
+        .catch(err => console.error(err))
     }
 
     return(
