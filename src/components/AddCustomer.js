@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
+// creating AddCustomer-function using props and the columndefs
 export default function AddCustomer(props) {
     const [open, setOpen] = React.useState(false);
     const [customer, setCustomer] = React.useState({
@@ -17,6 +18,8 @@ export default function AddCustomer(props) {
        email: '',
        phone: '' 
     })
+
+    // handles form opening 
     const handleClickOpen = () => {
         setOpen(true);
     }
@@ -25,11 +28,13 @@ export default function AddCustomer(props) {
         setOpen(false);
     }
     
+    // saves new customer on the form
       const handleSave = () => {
         props.addCustomer(customer);
         setOpen(false);
     }
-
+    
+    // returns the Add Customer-form
     return ( 
         <div>
             <Button variant='outlined' onClick={handleClickOpen}>

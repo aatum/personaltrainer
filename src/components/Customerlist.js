@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 
-
+// creating Customer-function and columns
 export default function Customer(){
 const [customers, setCustomers] = useState([]);
 const [open, setOpen] = useState(false);
@@ -40,17 +40,19 @@ const [columnDefs] = useState([
     }
 ])
 
-
+// using the useEffect-hook 
 useEffect(() => {
     getCustomers();
 }, []);
 
+// fetching customers from the API
 const getCustomers = () => {
     fetch(API_URL_CUSTOMERS)
     .then(response => response.json())
     .then(data => setCustomers(data.content))
 }
 
+// deleting customers by using fetch and DELETE-method
 const deleteCustomer = (data) => {
     window.confirm('Are you sure?')
     fetch(data.links[1].href, {method: 'DELETE'})
@@ -63,6 +65,7 @@ const deleteCustomer = (data) => {
     .catch(err => console.error(err))
 }
 
+// adding customers by using fetch and POST-method
 const addCustomer = (customer) => {
     fetch(API_URL_CUSTOMERS, {
         method: 'POST', 
@@ -78,6 +81,7 @@ const addCustomer = (customer) => {
     .catch(err => console.error(err))
 }
 
+// updating customers by fetching the URL and PUT-method
 const updateCustomer = (customer, url) => {
     fetch(url, {
         method: 'PUT',
@@ -93,6 +97,7 @@ const updateCustomer = (customer, url) => {
     .catch(err => console.error(err))
 }
 
+// adding training to a customer by fetching the training-API and POST-method
 const addTraining = (training) => {
     fetch(API_URL_TRAININGS, {
         method: 'POST',
@@ -108,6 +113,7 @@ const addTraining = (training) => {
     .catch(err => console.error(err))
 }
 
+// returning the customerlist
 return(
     <>
     <AddCustomer addCustomer={addCustomer}/>

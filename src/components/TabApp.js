@@ -8,11 +8,14 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import PeopleIcon from '@mui/icons-material/People';
 
+// creating a TabApp-function to make it easier to change pages
 function TabApp(){
     const [value, setValue] = useState('one');
     const handleChange = (event, value) => {
         setValue(value);
     };
+
+// returning different tabs with icons 
     return(
     <div>
         <Tabs value={value} onChange={handleChange}>

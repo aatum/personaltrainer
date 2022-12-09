@@ -1,10 +1,11 @@
 import React from 'react';
+import { Button } from '@mui/material';
 import {CSVLink} from 'react-csv';
 import DownloadIcon from '@mui/icons-material/Download';
-import { Button } from '@mui/material';
 
 export default function CSVdownload(props){
 
+// data that comes to the CSV-file
 const csvData = [
     {
         headerName: 'First name',
@@ -36,6 +37,7 @@ const csvData = [
     }
 ]
 
+// returns the customer data as a CSV-file
 return(
     <CSVLink
         data={props.customers}

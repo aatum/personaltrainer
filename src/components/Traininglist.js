@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Customer from './Customerlist';
 
+// creating Training-function with columns
 export default function Training(){
     const [trainings, setTrainings] = useState([]);
 
@@ -28,11 +29,12 @@ export default function Training(){
         }   
     ])
 
+// using the useEffect-hook to get the trainings
     useEffect(() => {
         getTrainings()
     }, [])
 
-    
+// getting training data with fetch from the API
     const getTrainings = () => {
         fetch(API_URL_TRAININGS_GET)
             .then(response => response.json())
@@ -41,6 +43,7 @@ export default function Training(){
             .catch(err => console.log(err));
     }
 
+// deleting training with fetch from the API and id, using DELETE-method
     const deleteTraining = (id) => {
         window.confirm('Are you sure?')
         fetch(API_URL_TRAININGS + id, {method: 'DELETE'})
@@ -53,6 +56,7 @@ export default function Training(){
         .catch(err => console.error(err))
     }
 
+// returning trainings as a list
     return(
         <>
         <div className='ag-theme-material' style={{height: 650, width: '90%', margin:'auto'}}>

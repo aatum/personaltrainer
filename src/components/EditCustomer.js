@@ -1,11 +1,12 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 
+// creating AddTraining-function using props and the columndefs
 export default function EditCustomer(props) {
     const [open, setOpen] = React.useState(false);
     const [customer, setCustomer] = React.useState({
@@ -18,6 +19,7 @@ export default function EditCustomer(props) {
        phone: '' 
     })
 
+// handles the opening of the form
     const handleClickOpen = () => {
         setOpen(true);
         console.log(props.data);
@@ -36,11 +38,13 @@ export default function EditCustomer(props) {
         setOpen(false);
     };
 
+    // handles saving of the updated customer
     const handleSave = () => {
         props.updateCustomer(customer, props.data.links[0].href);
         setOpen(false);
     };
     
+    // returns the Edit Customer-form
     return (
         <div>
           <Button size="small" onClick={handleClickOpen}>

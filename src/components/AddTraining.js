@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 import moment from 'moment';
 
+// creating AddTraining-function using props and the columndefs
 export default function AddTraining(props) {
     const [open, setOpen] = React.useState(false);
     const [training, setTraining] = React.useState({
@@ -16,6 +17,7 @@ export default function AddTraining(props) {
         customer: ''
     });
 
+// handles the opening of the form
     const handleClickOpen = () => {
     setTraining({
         ...training,
@@ -29,11 +31,13 @@ export default function AddTraining(props) {
     setOpen(false);
 };
 
+// handles the save of a new training
     const handleSave = () => {
     props.addTraining(training);
     setOpen(false);
 }
 
+// returning the Add Training-form
 return ( 
     <>
         <Button variant='outlined' onClick={handleClickOpen}>
