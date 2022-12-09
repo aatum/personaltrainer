@@ -31,7 +31,8 @@ export default function Training(){
     useEffect(() => {
         getTrainings()
     }, [])
- 
+
+    
     const getTrainings = () => {
         fetch(API_URL_TRAININGS_GET)
             .then(response => response.json())

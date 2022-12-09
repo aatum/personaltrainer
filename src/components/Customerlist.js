@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { API_URL_CUSTOMERS, API_URL_TRAININGS, API_URL_TRAININGS_GET } from '../constants';
+import { API_URL_CUSTOMERS, API_URL_TRAININGS } from '../constants';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import AddCustomer from './AddCustomer';
@@ -10,13 +10,14 @@ import CSVdownload from './CSV';
 import EditCustomer from './EditCustomer';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 
 export default function Customer(){
 const [customers, setCustomers] = useState([]);
+const [open, setOpen] = useState(false);
 const [columnDefs] = useState([
-    //{field: 'id', sortable: true, filter: true},
     {field: 'firstname', headerName: 'First name', sortable: true, filter: true},
     {field: 'lastname', headerName: 'Last name', sortable: true, filter: true},
     {field: 'streetaddress', headerName: 'Street address', sortable: true, filter: true},
@@ -26,15 +27,16 @@ const [columnDefs] = useState([
     {field: 'phone', headerName: 'Phone', sortable: true, filter: true},
     {
         width: 170,
-        cellRenderer: params => <AddTraining data={params.data} addTraining={addTraining}/>
+        valueGetter: (params) => params.data.links[0].href,
+        cellRenderer: params => <AddTraining data={params.data} addTraining={addTraining} url={params.value} customer={params.data}/>
     },
     {
-            width: 120,
-            cellRenderer: params => <EditCustomer data={params.data} updateCustomer={updateCustomer}/>
+        width: 120,
+        cellRenderer: params => <EditCustomer data={params.data} updateCustomer={updateCustomer}/>
     },
     {
-            width: 120,
-            cellRenderer: params => <Button color = 'error' startIcon={<DeleteIcon />} onClick={() => deleteCustomer(params.data)}>Delete</Button>
+        width: 120,
+        cellRenderer: params => <Button color = 'error' startIcon={<DeleteIcon />} onClick={() => deleteCustomer(params.data)}>Delete</Button>
     }
 ])
 
@@ -91,17 +93,17 @@ const updateCustomer = (customer, url) => {
     .catch(err => console.error(err))
 }
 
-const addTraining = (selectedCustomer) => {
+const addTraining = (training) => {
     fetch(API_URL_TRAININGS, {
         method: 'POST',
         headers: {'Content-type' : 'application/json'},
-        body: JSON.stringify(selectedCustomer)
+        body: JSON.stringify(training)
     })
     .then(response => {
         if (response.ok)
-            getCustomers();
+            setOpen(true);
         else
-            alert('Something went wrong in editing!')
+            alert('Something went wrong adding the training!')
     })
     .catch(err => console.error(err))
 }
